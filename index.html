@@ -82,7 +82,7 @@ body{background:var(--bg);font-family:Georgia,serif;color:var(--dark);min-height
 .back-ex{padding-left:12px;color:#666;font-style:italic;font-size:13px;line-height:1.6;border-left:3px solid #ccc}
 
 /* ── ETYMOLOGY ── */
-.etym-btn{width:100%;margin-top:8px;padding:10px;border-radius:10px;cursor:pointer;font-family:sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border:2px solid}
+.etym-btn{width:100%;margin-top:8px;padding:10px;border-radius:10px;cursor:pointer;font-family:sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border:2px solid;background:transparent}
 .etym-panel{border-radius:10px;padding:14px 16px;margin-top:4px;border:2px solid}
 .etym-eye{font-family:sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
 .etym-txt{font-family:sans-serif;font-size:13px;line-height:1.7;color:#333}
@@ -102,7 +102,7 @@ body{background:var(--bg);font-family:Georgia,serif;color:var(--dark);min-height
 .q-lbl{font-family:sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:10px}
 .q-def{font-size:16px;line-height:1.65;font-style:italic}
 .qopts{display:flex;flex-direction:column;gap:9px;margin-bottom:12px}
-.qopt{padding:13px 16px;border-radius:10px;cursor:pointer;font-family:Georgia,serif;font-size:15px;font-weight:bold;text-align:left;display:flex;align-items:center;gap:10px;border:2px solid #E0DBD3;background:transparent}
+.qopt{padding:13px 16px;border-radius:10px;cursor:pointer;font-family:Georgia,serif;font-size:15px;font-weight:bold;text-align:left;display:flex;align-items:center;gap:10px;border:2px solid #E0DBD3;background:#fff;color:var(--dark);transition:border-color .15s}
 .qopt:hover:not(.answered){border-color:#BBB}
 .qopt.correct{background:#EAF7EE;border-color:#4A7C59;color:#2C5F38}
 .qopt.wrong{background:#FBE9E7;border-color:#E07A5F;color:#8B2500}
@@ -256,13 +256,13 @@ body{background:var(--bg);font-family:Georgia,serif;color:var(--dark);min-height
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════════════
-//  WORD BANK — Vocabulary sorted by difficulty (Levels 1-10)
-//  Required fields: level, word, pronunciation, partOfSpeech, 
-//                   category, definition, etymology, example
-// ═══════════════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+//  WORD BANK — add your words here following this pattern
+//  Required fields: level (1–10), word, pronunciation,
+//  partOfSpeech, definition, etymology, example
+// ═══════════════════════════════════════════════════════
 
-  const WORDS = [
+const WORDS = [
 // ── ORIGINAL LEVEL 1 ─────────────────────────────────────────────────────
 { level: 1, word: "Vivid", pronunciation: "/ˈvɪvɪd/", partOfSpeech: "adjective", category: "Perception", definition: "Producing powerful feelings or strong, clear images in the mind; intensely bright.", etymology: "Latin vivus (alive) → vivid. Root viv- means 'life'. Also in: survive, revive, vivacious.", example: "She had a vivid memory of the morning her father left — the smell of coffee, the creak of the door." },
 { level: 1, word: "Benign", pronunciation: "/bɪˈnaɪn/", partOfSpeech: "adjective", category: "Character", definition: "Gentle and kindly; not harmful or threatening.", etymology: "Latin bene (well) + genus (born, kind) → benign. Root bene- means 'good'. Also in: benefit, benevolent, benefactor.", example: "The old professor had a benign smile that immediately put nervous students at ease." },
@@ -1102,266 +1102,284 @@ body{background:var(--bg);font-family:Georgia,serif;color:var(--dark);min-height
 { level: 6, word: "Hashgachah", pronunciation: "/haʃɡɑːˈxɑː/", partOfSpeech: "noun", category: "Jewish Philosophy", definition: "Divine providence; God's active guidance and governance of creation.", etymology: "Hebrew hashgachah ('supervision, oversight').", example: "Maimonides offered a philosophical account of hashgachah." }
 ];
 
-// ─────────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+//  CONFIG — level labels and colours
+// ═══════════════════════════════════════════════════════
+const COLORS = {1:"#6B9E78",2:"#5B8FA8",3:"#A67C52",4:"#7B6FA0",5:"#C97B4B",6:"#3D7A6A",7:"#7A3D5C",8:"#4D6FA8",9:"#8A4D3D",10:"#2E2E2E"};
+const LABELS = {1:"Foundational",2:"Developing",3:"Expanding",4:"Intermediate",5:"Proficient",6:"Advanced",7:"Scholarly",8:"Erudite",9:"Arcane",10:"Lexical Mastery"};
 
-let currentLevel = 'All';
-let currentMode = 'browse';
-let currentIndex = 0;
-let levelWords = [];
-let streak = 0;
-let best = 0;
-let cardFlipped = false;
+// ═══════════════════════════════════════════════════════
+//  APP STATE
+// ═══════════════════════════════════════════════════════
+let S = {
+  level:"All", mode:"browse",
+  cards:[], idx:0, flipped:false, etymOpen:false,
+  qPhase:"q", qOpts:[], qAns:null,
+  score:{c:0,t:0}, streak:0, best:0, done:false
+};
 
-function getWordsForLevel(level) {
-  if (level === 'All') {
-    return WORDS;
-  }
-  return WORDS.filter(w => w.level === parseInt(level));
-}
+// ═══════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════
+const $  = id => document.getElementById(id);
+const sh = (id, v) => $(id).classList.toggle("hidden", !v);
+function shuffle(a){ return [...a].sort(()=>Math.random()-.5) }
+function pool(){ return S.level==="All" ? WORDS : WORDS.filter(w=>w.level===+S.level) }
+function col(){ return S.level==="All" ? "#2E2E2E" : (COLORS[+S.level]||"#2E2E2E") }
+function cardCol(w){ return COLORS[w.level]||"#999" }
 
-function init() {
-  updateLevelList();
-}
-
-function updateLevelList() {
-  const lvlList = document.getElementById('lvl-list');
-  let html = '';
-  
-  for (let i = 1; i <= 10; i++) {
-    const words = getWordsForLevel(String(i));
-    const count = words.length;
-    
-    html += `
-      <div class="lvl-card">
-        <div class="lvl-top">
-          <div>
-            <div class="lvl-eye">Level ${i}</div>
-            <div class="lvl-name">Advanced Vocabulary</div>
-          </div>
-          <div class="lvl-cnt">${count} words</div>
+// ═══════════════════════════════════════════════════════
+//  BUILD HOME
+// ═══════════════════════════════════════════════════════
+function buildHome(){
+  $("hdr-count").textContent = WORDS.length + " Words · 10 Levels · Etymology";
+  const list = $("lvl-list");
+  list.innerHTML = "";
+  const levels = [...new Set(WORDS.map(w=>w.level))].sort((a,b)=>a-b);
+  // Show all 10 level slots; grey out empty ones
+  for(let lvl=1;lvl<=10;lvl++){
+    const c   = COLORS[lvl];
+    const cnt = WORDS.filter(w=>w.level===lvl).length;
+    const empty = cnt===0;
+    const card = document.createElement("div");
+    card.className = "lvl-card";
+    card.style.borderLeft = `4px solid ${empty?"#DDD":c}`;
+    card.innerHTML = `
+      <div class="lvl-top">
+        <div>
+          <div class="lvl-eye" style="color:${empty?"#CCC":c}">Level ${lvl}</div>
+          <div class="lvl-name" style="color:${empty?"#CCC":"inherit"}">${LABELS[lvl]}</div>
         </div>
-        <div class="row">
-          <button class="btn-fl" style="border-color:var(--l${i})" onclick="start('${i}','browse')">📖 Cards</button>
-          <button class="btn-qz" style="background-color:var(--l${i})" onclick="start('${i}','quiz')">⚡ Quiz</button>
-        </div>
+        <span class="lvl-cnt">${cnt} word${cnt!==1?"s":""}</span>
       </div>
-    `;
+      <div class="row">
+        <button class="btn-fl" style="border-color:${empty?"#DDD":c+"33"};color:${empty?"#CCC":c};background:${empty?"transparent":c+"11"}"
+          ${empty?"disabled":""} onclick="start(${lvl},'browse')">📖 Flashcards</button>
+        <button class="btn-qz" style="background:${empty?"#DDD":c};${empty?"cursor:not-allowed":""}"
+          ${empty?"disabled":""} onclick="start(${lvl},'quiz')">⚡ Quiz</button>
+      </div>`;
+    list.appendChild(card);
   }
-  
-  lvlList.innerHTML = html;
-  updateHeaderCount();
 }
 
-function updateHeaderCount() {
-  document.getElementById('hdr-count').textContent = `${WORDS.length} Words · 10 Levels · Etymology`;
+// ═══════════════════════════════════════════════════════
+//  SESSION CONTROL
+// ═══════════════════════════════════════════════════════
+function start(lvl, mode){
+  if(lvl!=="All" && WORDS.filter(w=>w.level===+lvl).length===0) return;
+  S.level=lvl; S.mode=mode; S.best=0;
+  reset();
+  show("learn");
 }
 
-function start(level, mode) {
-  currentLevel = level;
-  currentMode = mode;
-  currentIndex = 0;
-  streak = 0;
-  cardFlipped = false;
-  
-  levelWords = getWordsForLevel(level);
-  
-  if (levelWords.length === 0) {
-    alert('No words available for this level.');
-    return;
-  }
-  
-  document.getElementById('s-home').classList.add('hidden');
-  document.getElementById('s-learn').classList.remove('hidden');
-  document.getElementById('l-title').textContent = level === 'All' ? 'All Words' : `Level ${level}`;
-  
-  switchMode(mode);
+function reset(){
+  S.cards=shuffle(pool());
+  S.idx=0; S.flipped=false; S.etymOpen=false;
+  S.qPhase="q"; S.qOpts=[]; S.qAns=null;
+  S.score={c:0,t:0}; S.streak=0; S.done=false;
+  render();
 }
 
-function switchMode(mode) {
-  currentMode = mode;
-  currentIndex = 0;
-  cardFlipped = false;
-  document.getElementById('mb-browse').classList.toggle('on', mode === 'browse');
-  document.getElementById('mb-quiz').classList.toggle('on', mode === 'quiz');
-  document.getElementById('fc-area').classList.toggle('hidden', mode !== 'browse');
-  document.getElementById('qz-area').classList.toggle('hidden', mode !== 'quiz');
-  document.getElementById('score-screen').classList.add('hidden');
-  
-  if (mode === 'browse') {
-    showFlashcard();
+function switchMode(m){
+  if(S.mode===m) return;
+  S.mode=m; reset();
+}
+
+function goHome(){ show("home"); buildHome(); }
+
+// ═══════════════════════════════════════════════════════
+//  SCREEN SWITCH
+// ═══════════════════════════════════════════════════════
+function show(name){
+  sh("s-home",  name==="home");
+  sh("s-learn", name==="learn");
+  if(name==="learn") render();
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════════
+function render(){
+  // header
+  $("l-title").textContent = S.level==="All"
+    ? `All Words` : `Level ${S.level} — ${LABELS[+S.level]}`;
+  $("st-streak").textContent = S.streak;
+  $("st-best").textContent   = S.best;
+
+  // mode buttons
+  $("mb-browse").classList.toggle("on", S.mode==="browse");
+  $("mb-quiz").classList.toggle("on",   S.mode==="quiz");
+
+  // panels
+  sh("score-screen", S.done);
+  sh("prog",         !S.done);
+  sh("fc-area",  !S.done && S.mode==="browse");
+  sh("qz-area",  !S.done && S.mode==="quiz");
+
+  if(S.done){ renderScore(); return; }
+
+  // progress
+  const n = S.cards.length, i = S.idx+1;
+  $("prog-lbl").textContent  = `${i} / ${n}`;
+  $("prog-fill").style.width = (i/n*100)+"%";
+  $("prog-fill").style.background = col();
+  const ps = $("prog-score");
+  if(S.mode==="quiz"){
+    ps.classList.remove("hidden");
+    ps.textContent  = `${S.score.c}/${S.score.t} correct`;
+    ps.style.color  = col();
   } else {
-    showQuestion();
+    ps.classList.add("hidden");
   }
+
+  if(S.mode==="browse") renderFC();
+  else                  renderQZ();
 }
 
-function showFlashcard() {
-  if (currentIndex >= levelWords.length) {
-    showScore(streak);
-    return;
-  }
-  
-  const word = levelWords[currentIndex];
-  cardFlipped = false;
-  
-  document.getElementById('card-inner').classList.remove('flipped');
-  document.getElementById('fc-word').textContent = word.word;
-  document.getElementById('fc-pron').textContent = word.pronunciation;
-  document.getElementById('fc-pos').textContent = word.partOfSpeech;
-  document.getElementById('fc-badge').textContent = `L${word.level}`;
-  
-  document.getElementById('fc-front-bar').style.backgroundColor = `var(--l${word.level})`;
-  document.getElementById('fc-back-bar').style.backgroundColor = `var(--l${word.level})`;
-  
-  document.getElementById('fc-bword').textContent = word.word;
-  document.getElementById('fc-def').textContent = word.definition;
-  document.getElementById('fc-ex').textContent = `"${word.example}"`;
-  
-  document.getElementById('etym-txt').textContent = word.etymology;
-  document.getElementById('etym-btn').textContent = '📖 Show Etymology';
-  document.getElementById('etym-panel').classList.add('hidden');
-  
-  document.getElementById('btn-prev').disabled = currentIndex === 0;
-  document.getElementById('prog-lbl').textContent = `${currentIndex + 1} / ${levelWords.length}`;
-  document.getElementById('prog-fill').style.width = ((currentIndex + 1) / levelWords.length * 100) + '%';
-}
+// ─── FLASHCARD ───────────────────────────────────────
+function renderFC(){
+  const w   = S.cards[S.idx];
+  if(!w) return;
+  const c   = cardCol(w);
 
-function flip() {
-  cardFlipped = !cardFlipped;
-  document.getElementById('card-inner').classList.toggle('flipped');
-}
-
-function toggleEtym() {
-  document.getElementById('etym-panel').classList.toggle('hidden');
-}
-
-function prev() {
-  if (currentIndex > 0) {
-    currentIndex--;
-    showFlashcard();
-  }
-}
-
-function next() {
-  if (currentMode === 'browse') {
-    if (currentIndex < levelWords.length - 1) {
-      currentIndex++;
-      streak++;
-      showFlashcard();
-    } else {
-      showScore(streak);
-    }
-  } else {
-    if (currentIndex < levelWords.length - 1) {
-      currentIndex++;
-      streak++;
-      showQuestion();
-    } else {
-      showScore(streak);
-    }
-  }
-}
-
-function showQuestion() {
-  if (currentIndex >= levelWords.length) {
-    showScore(streak);
-    return;
-  }
-  
-  const word = levelWords[currentIndex];
-  
-  document.getElementById('q-def').textContent = word.definition;
-  document.getElementById('qprompt-bar').style.backgroundColor = `var(--l${word.level})`;
-  
-  // Generate options
-  const correctAnswer = word.word;
-  const wrongAnswers = levelWords
-    .filter(w => w.word !== correctAnswer)
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 3)
-    .map(w => w.word);
-  
-  const options = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
-  
-  let optionsHTML = '';
-  options.forEach((opt, idx) => {
-    optionsHTML += `
-      <div class="qopt" onclick="answerQuestion(this, '${opt}', '${correctAnswer}')">
-        <div class="qletter">${String.fromCharCode(65 + idx)}</div>
-        <div>${opt}</div>
-      </div>
-    `;
+  // colour bars + badges
+  ["fc-front-bar","fc-back-bar"].forEach(id=>$(id).style.background=c);
+  ["fc-badge","fc-badge2"].forEach(id=>{
+    $(id).textContent = `Lv ${w.level}`;
+    $(id).style.background = c+"22";
+    $(id).style.color = c;
   });
-  
-  document.getElementById('qopts').innerHTML = optionsHTML;
-  document.getElementById('qresult').classList.add('hidden');
-  
-  document.getElementById('prog-lbl').textContent = `${currentIndex + 1} / ${levelWords.length}`;
-  document.getElementById('prog-fill').style.width = ((currentIndex + 1) / levelWords.length * 100) + '%';
-}
 
-function answerQuestion(el, selected, correct) {
-  const word = levelWords[currentIndex];
-  const isCorrect = selected === correct;
-  
-  document.querySelectorAll('.qopt').forEach(opt => opt.classList.add('answered'));
-  
-  if (isCorrect) {
-    el.classList.add('correct');
-    streak++;
-    document.getElementById('qfb-lbl').textContent = '✓ Correct!';
-    document.getElementById('qfb').classList.remove('wrong');
-    document.getElementById('qfb').classList.add('correct');
-  } else {
-    el.classList.add('wrong');
-    document.querySelector(`[onclick*="${correct}"]`)?.classList.add('correct');
-    streak = 0;
-    document.getElementById('qfb-lbl').textContent = '✗ Incorrect';
-    document.getElementById('qfb').classList.remove('correct');
-    document.getElementById('qfb').classList.add('wrong');
+  // front
+  $("fc-word").textContent = w.word;
+  $("fc-pron").textContent = w.pronunciation;
+  $("fc-pos").textContent  = w.partOfSpeech;
+
+  // back
+  $("fc-bword").textContent = w.word;
+  $("fc-def").textContent   = w.definition;
+  $("fc-ex").textContent    = `"${w.example}"`;
+  $("fc-ex").style.borderLeftColor = c;
+
+  // flip
+  $("card-inner").classList.toggle("flipped", S.flipped);
+
+  // etymology
+  sh("etym-wrap", S.flipped);
+  if(S.flipped){
+    $("etym-btn").textContent = S.etymOpen ? "▲ Hide Etymology" : "🌱 Show Etymology & Roots";
+    $("etym-btn").style.borderColor = c+"55";
+    $("etym-btn").style.color       = c;
+    $("etym-btn").style.background  = c+"0D";
+    $("etym-eye").style.color       = c;
+    $("etym-txt").textContent       = w.etymology;
+    sh("etym-panel", S.etymOpen);
+    if(S.etymOpen){
+      $("etym-panel").style.background  = c+"0D";
+      $("etym-panel").style.borderColor = c+"44";
+    }
   }
-  
-  document.getElementById('qfb-ex').textContent = `"${word.example}"`;
-  document.getElementById('qetym-txt').textContent = word.etymology;
-  document.getElementById('qetym').style.borderColor = `var(--l${word.level})`;
-  document.getElementById('qresult').classList.remove('hidden');
+
+  // nav
+  $("btn-prev").disabled   = S.idx===0;
+  $("btn-next").textContent = S.idx+1<S.cards.length ? "Next →" : "Finish";
 }
 
-function showScore(finalStreak) {
-  if (finalStreak > best) best = finalStreak;
-  
-  document.getElementById('st-streak').textContent = streak;
-  document.getElementById('st-best').textContent = best;
-  
-  document.getElementById('sc-emoji').textContent = streak >= 8 ? '🎉' : streak >= 5 ? '👏' : '✨';
-  document.getElementById('sc-num').textContent = streak;
-  document.getElementById('sc-msg').textContent = streak === levelWords.length ? 'Perfect!' : `${streak} / ${levelWords.length} correct`;
-  
-  document.getElementById('fc-area').classList.add('hidden');
-  document.getElementById('qz-area').classList.add('hidden');
-  document.getElementById('score-screen').classList.remove('hidden');
+function flip(){
+  if(S.mode!=="browse") return;
+  S.flipped = !S.flipped;
+  if(!S.flipped) S.etymOpen=false;
+  render();
+}
+function toggleEtym(){ S.etymOpen=!S.etymOpen; render(); }
+function prev(){ if(S.idx>0){S.idx--;S.flipped=false;S.etymOpen=false;render();} }
+function next(){
+  if(S.idx+1>=S.cards.length){ S.done=true; render(); }
+  else{ S.idx++;S.flipped=false;S.etymOpen=false;S.qPhase="q";S.qOpts=[];S.qAns=null;render(); }
 }
 
-function reset() {
-  currentIndex = 0;
-  cardFlipped = false;
-  
-  if (currentMode === 'browse') {
-    showFlashcard();
-  } else {
-    showQuestion();
+// ─── QUIZ ────────────────────────────────────────────
+function renderQZ(){
+  const w = S.cards[S.idx];
+  if(!w) return;
+  const c = cardCol(w);
+
+  $("qprompt-bar").style.background = c;
+  $("q-def").textContent = w.definition;
+
+  // generate options once per card
+  if(S.qPhase==="q" && S.qOpts.length===0){
+    const p  = pool();
+    const others = shuffle(p.filter(x=>x.word!==w.word)).slice(0,3);
+    S.qOpts = shuffle([w,...others]);
   }
-  
-  document.getElementById('score-screen').classList.add('hidden');
-  document.getElementById('fc-area').classList.toggle('hidden', currentMode !== 'browse');
-  document.getElementById('qz-area').classList.toggle('hidden', currentMode !== 'quiz');
+
+  // render options
+  const container = $("qopts");
+  container.innerHTML = "";
+  const letters = ["A","B","C","D"];
+  S.qOpts.forEach((opt,i)=>{
+    const btn = document.createElement("button");
+    btn.className = "qopt";
+    if(S.qPhase==="result"){
+      btn.classList.add("answered");
+      if(opt.word===w.word)               btn.classList.add("correct");
+      else if(S.qAns&&opt.word===S.qAns.word) btn.classList.add("wrong");
+    }
+    btn.innerHTML=`<span class="qletter">${letters[i]}</span>${opt.word}`;
+    btn.addEventListener("click",()=>answer(opt));
+    container.appendChild(btn);
+  });
+
+  // result panel
+  sh("qresult", S.qPhase==="result");
+  if(S.qPhase==="result"){
+    const ok = S.qAns && S.qAns.word===w.word;
+    $("qfb").className    = "qfb "+(ok?"correct":"wrong");
+    $("qfb-lbl").textContent = ok ? "✓ Correct!" : `✗ The answer was "${w.word}"`;
+    $("qfb-ex").textContent  = `"${w.example}"`;
+    $("qetym").style.background  = c+"0D";
+    $("qetym").style.borderColor = c+"44";
+    $("qetym-lbl").style.color   = c;
+    $("qetym-txt").textContent   = w.etymology;
+    $("btn-nw").textContent = S.idx+1<S.cards.length ? "Next Word →" : "See Results";
+  }
 }
 
-function goHome() {
-  document.getElementById('s-learn').classList.add('hidden');
-  document.getElementById('s-home').classList.remove('hidden');
+function answer(opt){
+  if(S.qPhase==="result") return;
+  S.qAns   = opt;
+  S.qPhase = "result";
+  const ok = opt.word===S.cards[S.idx].word;
+  S.streak = ok ? S.streak+1 : 0;
+  S.best   = Math.max(S.best, S.streak);
+  S.score.t++;
+  if(ok) S.score.c++;
+  render();
 }
 
-init();
+// ─── SCORE ───────────────────────────────────────────
+function renderScore(){
+  const {c,t} = S.score;
+  const ratio  = t>0 ? c/t : 0;
+  const browse = S.mode==="browse";
+  $("sc-emoji").textContent = browse ? "✨" : (ratio>=.8 ? "🏆" : "📚");
+  $("sc-num").textContent   = browse ? "All Done!" : `${c} / ${t}`;
+  $("sc-msg").textContent   = browse
+    ? `You reviewed ${S.cards.length} words.`
+    : (ratio>=.8 ? "Excellent — your lexicon is growing." : "Keep reviewing and the patterns will stick.");
+  const sl = $("sc-streak");
+  if(!browse && S.best>1){
+    sl.classList.remove("hidden");
+    sl.textContent  = `Best streak: ${S.best} in a row 🔥`;
+    sl.style.color  = col();
+  } else { sl.classList.add("hidden"); }
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+buildHome();
 </script>
 </body>
 </html>
