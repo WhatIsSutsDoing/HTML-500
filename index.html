@@ -1132,7 +1132,812 @@ const WORDS = [
 
  { level: 5, word: "Subtle", pronunciation: "/ˈsʌtəl/", partOfSpeech: "adjective", category: "General", definition: "Delicate or difficult to notice or understand.", etymology: "Latin subtilis (fine, delicate).", example: "There was a subtle difference between the two designs." },
 
- { level: 5, word: "Versatile", pronunciation: "/ˈvɜːsətaɪl/", partOfSpeech: "adjective", category: "Skills", definition: "Able to adapt easily or perform many different functions.", etymology: "Latin versatilis (turning easily).", example: "She is a versatile musician." },
+ { level: 5, word: "Versatile", pronunciation: "/ˈvɜːsətaɪl/", partOfSpeech: "adjective", category: "Skills", definition: "Able to adapt easily or perform many different functions.", etymology: "Latin versatilis (turning easily).", example: "She is a versatile musician." }, 
+ {
+   level: 2,
+   word: "Perichoresis",
+   pronunciation: "/ˌpɛrɪkəˈriːsɪs/",
+   partOfSpeech: "noun",
+   category: "Trinitarian Theology",
+   definition: "The mutual indwelling and interpenetration of the three Persons of the Trinity without confusion or division.",
+   etymology: "Greek peri- ('around') + chorein ('to make room, contain'). Literally 'going around one another.'",
+   example: "Perichoresis explains the perfect unity and distinction of the Father, Son, and Holy Spirit."
+ },
+ {
+   level: 2,
+   word: "Kenosis",
+   pronunciation: "/kɪˈnoʊsɪs/",
+   partOfSpeech: "noun",
+   category: "Christology",
+   definition: "Christ's voluntary self-emptying in becoming human while remaining fully divine.",
+   etymology: "Greek kenosis ('emptying') from kenoun ('to empty').",
+   example: "Paul describes Christ's kenosis in Philippians 2."
+ },
+ {
+   level: 2,
+   word: "Theosis",
+   pronunciation: "/θiˈoʊsɪs/",
+   partOfSpeech: "noun",
+   category: "Eastern Theology",
+   definition: "The process of becoming united with God through grace and participation in the divine life.",
+   etymology: "Greek theosis ('deification') from theos ('God').",
+   example: "Theosis is central to Eastern Orthodox spirituality."
+ },
+ {
+   level: 2,
+   word: "Apophatic",
+   pronunciation: "/ˌæpəˈfætɪk/",
+   partOfSpeech: "adjective",
+   category: "Mystical Theology",
+   definition: "Describing God by stating what He is not rather than what He is.",
+   etymology: "Greek apophasis ('denial').",
+   example: "Apophatic theology emphasizes God's incomprehensibility."
+ },
+ {
+   level: 2,
+   word: "Cataphatic",
+   pronunciation: "/ˌkætəˈfætɪk/",
+   partOfSpeech: "adjective",
+   category: "Mystical Theology",
+   definition: "Describing God through positive affirmations and revealed attributes.",
+   etymology: "Greek kataphasis ('affirmation').",
+   example: "Scripture often employs cataphatic language about God's love."
+ },
+ {
+   level: 2,
+   word: "Soteriology",
+   pronunciation: "/soʊˌtɪəriˈɒlədʒi/",
+   partOfSpeech: "noun",
+   category: "Systematic Theology",
+   definition: "The branch of theology concerned with salvation.",
+   etymology: "Greek soter ('savior') + logos ('study').",
+   example: "Reformation debates often focused on soteriology."
+ },
+ {
+   level: 2,
+   word: "Ecclesiology",
+   pronunciation: "/ɪˌkliːziˈɒlədʒi/",
+   partOfSpeech: "noun",
+   category: "Systematic Theology",
+   definition: "The theological study of the Church, its nature, mission, and authority.",
+   etymology: "Greek ekklesia ('assembly, church') + logos.",
+   example: "Their ecclesiology emphasized local church autonomy."
+ },
+ {
+   level: 2,
+   word: "Eschatology",
+   pronunciation: "/ˌɛskəˈtɒlədʒi/",
+   partOfSpeech: "noun",
+   category: "Systematic Theology",
+   definition: "The study of the last things, including resurrection, judgment, and the new creation.",
+   etymology: "Greek eschatos ('last') + logos.",
+   example: "Eschatology shapes Christian hope."
+ },
+ {
+   level: 2,
+   word: "Pneumatology",
+   pronunciation: "/njuːˌmætəˈɒlədʒi/",
+   partOfSpeech: "noun",
+   category: "Systematic Theology",
+   definition: "The theological study of the Holy Spirit.",
+   etymology: "Greek pneuma ('spirit') + logos.",
+   example: "Pentecostal theology places strong emphasis on pneumatology."
+ },
+ {
+   level: 2,
+   word: "Hamartiology",
+   pronunciation: "/ˌhæmɑːrtiˈɒlədʒi/",
+   partOfSpeech: "noun",
+   category: "Systematic Theology",
+   definition: "The branch of theology dealing with sin and its consequences.",
+   etymology: "Greek hamartia ('sin') + logos.",
+   example: "Hamartiology explores humanity's fallen condition."
+ },
+ {
+   level: 2,
+   word: "Impassibility",
+   pronunciation: "/ɪmˌpæsəˈbɪləti/",
+   partOfSpeech: "noun",
+   category: "Doctrine of God",
+   definition: "The doctrine that God is not subject to involuntary suffering or emotional change.",
+   etymology: "Latin impassibilis ('incapable of suffering').",
+   example: "Classical theists defended divine impassibility."
+ },
+ {
+   level: 2,
+   word: "Aseity",
+   pronunciation: "/əˈsiːəti/",
+   partOfSpeech: "noun",
+   category: "Doctrine of God",
+   definition: "God's self-existence and absolute independence from anything else.",
+   etymology: "Latin a se ('from himself').",
+   example: "God's aseity means He depends on nothing."
+ },
+ {
+   level: 2,
+   word: "Beatific Vision",
+   pronunciation: "/biːəˈtɪfɪk ˈvɪʒən/",
+   partOfSpeech: "noun",
+   category: "Eschatology",
+   definition: "The direct and perfect vision of God enjoyed by the redeemed in heaven.",
+   etymology: "Latin beatificus ('making happy').",
+   example: "The beatific vision is the highest Christian hope."
+ },
+ {
+   level: 2,
+   word: "Immutability",
+   pronunciation: "/ɪˌmjuːtəˈbɪləti/",
+   partOfSpeech: "noun",
+   category: "Doctrine of God",
+   definition: "The attribute of God whereby His nature and character never change.",
+   etymology: "Latin immutabilis ('unchangeable').",
+   example: "Immutability underscores God's faithfulness."
+ },
+ {
+   level: 2,
+   word: "Consubstantial",
+   pronunciation: "/ˌkɒnsəbˈstænʃəl/",
+   partOfSpeech: "adjective",
+   category: "Trinitarian Theology",
+   definition: "Sharing the same substance or essence.",
+   etymology: "Latin con- ('together') + substantia ('substance').",
+   example: "The Nicene Creed calls the Son consubstantial with the Father."
+ },
+
+ {
+   level: 3,
+   word: "Anhypostasis",
+   pronunciation: "/ˌænhaɪpəˈstæsɪs/",
+   partOfSpeech: "noun",
+   category: "Christology",
+   definition: "The doctrine that Christ's human nature has no independent personal subsistence apart from the divine Logos.",
+   etymology: "Greek an- ('without') + hypostasis.",
+   example: "Anhypostasis protects Christ's personal unity."
+ },
+ {
+   level: 3,
+   word: "Enhypostasis",
+   pronunciation: "/ˌɛnhaɪpəˈstæsɪs/",
+   partOfSpeech: "noun",
+   category: "Christology",
+   definition: "The teaching that Christ's human nature exists personally in the divine Person of the Son.",
+   etymology: "Greek en- ('in') + hypostasis.",
+   example: "Enhypostasis complements anhypostasis."
+ },
+ {
+   level: 3,
+   word: "Communicatio Idiomatum",
+   pronunciation: "/kəˌmjuːnɪˈkeɪʃioʊ ˌɪdiəˈmɑːtəm/",
+   partOfSpeech: "noun",
+   category: "Christology",
+   definition: "The communication of properties between Christ's divine and human natures in the one Person.",
+   etymology: "Latin: 'communication of attributes.'",
+   example: "The communicatio idiomatum explains biblical language about Christ."
+ },
+ {
+   level: 3,
+   word: "Filioque",
+   pronunciation: "/ˌfɪlioʊˈkweɪ/",
+   partOfSpeech: "noun",
+   category: "Trinitarian Theology",
+   definition: "The phrase 'and the Son' added to the Nicene Creed regarding the Spirit's procession.",
+   etymology: "Latin filioque ('and from the Son').",
+   example: "The filioque became a major East-West controversy."
+ },
+ {
+   level: 3,
+   word: "Monergism",
+   pronunciation: "/ˈmɒnərdʒɪzəm/",
+   partOfSpeech: "noun",
+   category: "Soteriology",
+   definition: "The doctrine that God alone accomplishes salvation.",
+   etymology: "Greek monos ('alone') + ergon ('work').",
+   example: "Monergism is associated with Reformed theology."
+ },
+ {
+   level: 3,
+   word: "Synergism",
+   pronunciation: "/ˈsɪnərdʒɪzəm/",
+   partOfSpeech: "noun",
+   category: "Soteriology",
+   definition: "The belief that human cooperation participates in the process of salvation.",
+   etymology: "Greek syn ('together') + ergon ('work').",
+   example: "Synergism emphasizes cooperation with divine grace."
+ },
+ {
+   level: 3,
+   word: "Supralapsarianism",
+   pronunciation: "/ˌsuːprələpˈsɛəriənɪzəm/",
+   partOfSpeech: "noun",
+   category: "Reformed Theology",
+   definition: "The view that God's decree of election logically preceded His decree to permit the Fall.",
+   etymology: "Latin supra ('above') + lapsus ('fall').",
+   example: "Supralapsarianism remains a minority Reformed position."
+ },
+ {
+   level: 3,
+   word: "Infralapsarianism",
+   pronunciation: "/ˌɪnfrələpˈsɛəriənɪzəm/",
+   partOfSpeech: "noun",
+   category: "Reformed Theology",
+   definition: "The view that God's decree of election logically followed His decree to permit the Fall.",
+   etymology: "Latin infra ('below') + lapsus.",
+   example: "Many Reformed confessions assume infralapsarianism."
+ },
+ {
+   level: 3,
+   word: "Logos",
+   pronunciation: "/ˈloʊɡɒs/",
+   partOfSpeech: "noun",
+   category: "Christology",
+   definition: "The eternal Word of God, identified with Christ in John's Gospel.",
+   etymology: "Greek logos ('word, reason').",
+   example: "John declares that the Logos became flesh."
+ },
+ {
+   level: 3,
+   word: "Ousia",
+   pronunciation: "/ˈuːsiə/",
+   partOfSpeech: "noun",
+   category: "Metaphysics & Ontology",
+   definition: "Essence or substance; what fundamentally makes something what it is.",
+   etymology: "Greek ousia ('being, essence').",
+   example: "The Father and Son share one ousia."
+ },
+ {
+   level: 3,
+   word: "Economy",
+   pronunciation: "/ɪˈkɒnəmi/",
+   partOfSpeech: "noun",
+   category: "Trinitarian Theology",
+   definition: "God's ordered plan and actions in salvation history.",
+   etymology: "Greek oikonomia ('household management').",
+   example: "The economy of salvation unfolds throughout Scripture."
+ },
+ {
+   level: 3,
+   word: "Theodicy",
+   pronunciation: "/θiˈɒdɪsi/",
+   partOfSpeech: "noun",
+   category: "Christian Philosophy",
+   definition: "A philosophical defense of God's goodness despite the existence of evil.",
+   etymology: "Greek theos ('God') + dike ('justice').",
+   example: "Augustine developed an influential theodicy."
+ },
+ {
+   level: 3,
+   word: "Emanation",
+   pronunciation: "/ˌɛməˈneɪʃən/",
+   partOfSpeech: "noun",
+   category: "Philosophy of Religion",
+   definition: "The idea that all reality flows from a first principle or ultimate source.",
+   etymology: "Latin emanare ('to flow out').",
+   example: "Neoplatonic emanation influenced early Christian thinkers."
+ },
+ {
+   level: 3,
+   word: "Analogia Entis",
+   pronunciation: "/əˌnælədʒiə ˈɛntɪs/",
+   partOfSpeech: "noun",
+   category: "Philosophy of Religion",
+   definition: "The analogy of being; the idea that creatures reflect God analogically but not identically.",
+   etymology: "Latin: 'analogy of being.'",
+   example: "Analogia entis became central in medieval theology."
+ },
+ {
+   level: 3,
+   word: "Analogia Fidei",
+   pronunciation: "/əˌnælədʒiə ˈfɪdeɪ/",
+   partOfSpeech: "noun",
+   category: "Biblical Interpretation",
+   definition: "The principle that Scripture interprets Scripture.",
+   etymology: "Latin: 'analogy of faith.'",
+   example: "Reformers appealed to the analogia fidei."
+ },
+
+ {
+   level: 4,
+   word: "Circumincession",
+   pronunciation: "/ˌsɜːrkəmɪnˈsɛʃən/",
+   partOfSpeech: "noun",
+   category: "Trinitarian Theology",
+   definition: "The Latin theological term corresponding to perichoresis.",
+   etymology: "Latin circum ('around') + incedere ('to move').",
+   example: "Circumincession describes the eternal communion of the Trinity."
+ },
+ {
+   level: 4,
+   word: "Prosopon",
+   pronunciation: "/ˈprɒsəpɒn/",
+   partOfSpeech: "noun",
+   category: "Christology",
+   definition: "A Greek term meaning person or face, important in Christological debates.",
+   etymology: "Greek prosopon ('face, person').",
+   example: "The councils distinguished prosopon from ousia."
+ },
+ {
+   level: 4,
+   word: "Idiomatum",
+   pronunciation: "/ˌɪdiəˈmɑːtəm/",
+   partOfSpeech: "noun",
+   category: "Christology",
+   definition: "Attributes or properties belonging to a nature.",
+   etymology: "Latin idioma ('distinctive property').",
+   example: "The divine idiomatum remain distinct from the human."
+ },
+ {
+   level: 4,
+   word: "Perichoretic",
+   pronunciation: "/ˌpɛrɪkəˈrɛtɪk/",
+   partOfSpeech: "adjective",
+   category: "Trinitarian Theology",
+   definition: "Relating to the mutual indwelling of the Trinity.",
+   etymology: "Derived from perichoresis.",
+   example: "Their relationship is described as perichoretic love."
+ },
+ {
+   level: 4,
+   word: "Subsistence",
+   pronunciation: "/səbˈsɪstəns/",
+   partOfSpeech: "noun",
+   category: "Metaphysics & Ontology",
+   definition: "Independent personal existence, especially in Trinitarian theology.",
+   etymology: "Latin subsistere ('to stand firm').",
+   example: "Each divine Person possesses distinct subsistence."
+ },
+ {
+   level: 4,
+   word: "Quiddity",
+   pronunciation: "/ˈkwɪdɪti/",
+   partOfSpeech: "noun",
+   category: "Metaphysics & Ontology",
+   definition: "The essential nature or 'whatness' of a thing.",
+   etymology: "Latin quid ('what').",
+   example: "Medieval philosophers debated quiddity."
+ },
+ {
+   level: 4,
+   word: "Haecceity",
+   pronunciation: "/hɛkˈsiːəti/",
+   partOfSpeech: "noun",
+   category: "Metaphysics & Ontology",
+   definition: "The unique 'thisness' that individuates an entity.",
+   etymology: "Latin haec ('this').",
+   example: "Scotus explained individuality through haecceity."
+ },
+ {
+   level: 4,
+   word: "Exemplarism",
+   pronunciation: "/ɪɡˈzɛmplərɪzəm/",
+   partOfSpeech: "noun",
+   category: "Christian Philosophy",
+   definition: "The doctrine that creation reflects eternal ideas in the divine mind.",
+   etymology: "Latin exemplum ('model').",
+   example: "Bonaventure defended exemplarism."
+ },
+ {
+   level: 4,
+   word: "Participatory Ontology",
+   pronunciation: "/pɑːrˈtɪsɪpətɔːri ɒnˈtɒlədʒi/",
+   partOfSpeech: "noun",
+   category: "Metaphysics & Ontology",
+   definition: "The belief that created beings exist by participating in God's being.",
+   etymology: "Latin participare ('to share').",
+   example: "Participatory ontology shaped medieval metaphysics."
+ },
+ {
+   level: 4,
+   word: "Divine Simplicity",
+   pronunciation: "/dɪˈvaɪn sɪmˈplɪsəti/",
+   partOfSpeech: "noun",
+   category: "Doctrine of God",
+   definition: "The doctrine that God is not composed of parts but is identical with His attributes.",
+   etymology: "Latin simplex ('without composition').",
+   example: "Divine simplicity remains a cornerstone of classical theism."
+ },
+ {
+   level: 4,
+   word: "Actus Purus",
+   pronunciation: "/ˈæktʊs ˈpjʊərəs/",
+   partOfSpeech: "noun",
+   category: "Christian Philosophy",
+   definition: "Pure actuality without potentiality, traditionally predicated of God.",
+   etymology: "Latin: 'pure act.'",
+   example: "Aquinas described God as actus purus."
+ },
+ {
+   level: 4,
+   word: "Potentia",
+   pronunciation: "/pəˈtɛnʃiə/",
+   partOfSpeech: "noun",
+   category: "Metaphysics & Ontology",
+   definition: "Potentiality or capacity for change.",
+   etymology: "Latin potentia ('power').",
+   example: "Creatures possess potentia unlike God."
+ },
+ {
+   level: 4,
+   word: "Actuality",
+   pronunciation: "/ˌæktʃuˈæləti/",
+   partOfSpeech: "noun",
+   category: "Metaphysics & Ontology",
+   definition: "The realized state of being as opposed to potentiality.",
+   etymology: "Latin actualis.",
+   example: "Aristotelian actuality shaped Christian metaphysics."
+ },
+ {
+   level: 4,
+   word: "Teleology",
+   pronunciation: "/ˌtɛliˈɒlədʒi/",
+   partOfSpeech: "noun",
+   category: "Christian Philosophy",
+   definition: "The philosophical study of purpose, ends, or final causes.",
+   etymology: "Greek telos ('end, goal').",
+   example: "Natural theology often employs teleology."
+ },
+ {
+   level: 4,
+   word: "Final Cause",
+   pronunciation: "/ˈfaɪnəl kɔːz/",
+   partOfSpeech: "noun",
+   category: "Christian Philosophy",
+   definition: "The purpose or end for which something exists.",
+   etymology: "Aristotelian philosophy.",
+   example: "Human flourishing is humanity's final cause."
+ },
+
+[
+ {
+   level: 4,
+   word: "Inherence",
+   pronunciation: "/ɪnˈhɪərəns/",
+   partOfSpeech: "noun",
+   category: "Metaphysics & Ontology",
+   definition: "The manner in which an attribute or accident exists within a substance without existing independently.",
+   etymology: "Latin inhaerere ('to stick in, cling to'). Root: haerere ('to adhere').",
+   example: "Whiteness has inherence in the marble but cannot exist apart from it."
+ },
+ {
+   level: 4,
+   word: "Subsistent",
+   pronunciation: "/səbˈsɪstənt/",
+   partOfSpeech: "adjective",
+   category: "Metaphysics & Ontology",
+   definition: "Existing in itself rather than merely as a property of something else.",
+   etymology: "Latin subsistere ('to stand firm, continue to exist').",
+   example: "Classical theology describes each divine Person as subsistent."
+ },
+ {
+   level: 4,
+   word: "Hypostatic Union",
+   pronunciation: "/ˌhaɪpəˈstætɪk ˈjuːniən/",
+   partOfSpeech: "noun",
+   category: "Christology",
+   definition: "The union of Christ's fully divine and fully human natures in one Person without confusion, change, division, or separation.",
+   etymology: "Greek hypostasis ('person, underlying reality') + Latin unio ('union').",
+   example: "The Council of Chalcedon defined the doctrine of the hypostatic union."
+ },
+ {
+   level: 4,
+   word: "Extra Calvinisticum",
+   pronunciation: "/ˈɛkstrə ˌkælvɪˈnɪstɪkəm/",
+   partOfSpeech: "noun",
+   category: "Christology",
+   definition: "The teaching that the eternal Son was never confined to His human nature during the Incarnation.",
+   etymology: "Latin: 'the Calvinistic extra.'",
+   example: "The extra Calvinisticum preserves the infinite nature of the Logos."
+ },
+ {
+   level: 4,
+   word: "Vestigia Dei",
+   pronunciation: "/vɛˈstɪdʒiə ˈdeɪ/",
+   partOfSpeech: "noun",
+   category: "Natural Theology",
+   definition: "The 'traces of God' believed to be reflected throughout creation.",
+   etymology: "Latin vestigia ('footprints, traces') + Dei ('of God').",
+   example: "Medieval theologians sought the vestigia Dei in nature."
+ },
+ {
+   level: 4,
+   word: "Via Negativa",
+   pronunciation: "/ˌvaɪə ˌnɛɡəˈtiːvə/",
+   partOfSpeech: "noun",
+   category: "Mystical Theology",
+   definition: "The method of approaching God by denying finite attributes rather than affirming them.",
+   etymology: "Latin: 'negative way.'",
+   example: "Pseudo-Dionysius is famous for the via negativa."
+ },
+ {
+   level: 4,
+   word: "Via Positiva",
+   pronunciation: "/ˌvaɪə ˌpɒzɪˈtiːvə/",
+   partOfSpeech: "noun",
+   category: "Mystical Theology",
+   definition: "The method of speaking about God through positive affirmations drawn from revelation and creation.",
+   etymology: "Latin: 'positive way.'",
+   example: "The Psalms frequently employ the via positiva."
+ },
+ {
+   level: 4,
+   word: "Univocity",
+   pronunciation: "/ˌjuːnɪˈvɒsɪti/",
+   partOfSpeech: "noun",
+   category: "Christian Philosophy",
+   definition: "The philosophical view that a term has exactly the same meaning when applied to God and creatures.",
+   etymology: "Latin unus ('one') + vox ('voice').",
+   example: "Scotus argued for a qualified form of univocity of being."
+ },
+ {
+   level: 4,
+   word: "Equivocity",
+   pronunciation: "/ɪˌkwɪˈvɒsɪti/",
+   partOfSpeech: "noun",
+   category: "Christian Philosophy",
+   definition: "The view that the same word has entirely different meanings in different contexts.",
+   etymology: "Latin aequus ('equal') + vox ('voice').",
+   example: "Pure equivocity would make meaningful theological language impossible."
+ },
+ {
+   level: 4,
+   word: "Analogy",
+   pronunciation: "/əˈnælədʒi/",
+   partOfSpeech: "noun",
+   category: "Christian Philosophy",
+   definition: "A middle way between univocal and equivocal language in speaking about God.",
+   etymology: "Greek analogia ('proportion, correspondence').",
+   example: "Thomas Aquinas grounded theological language in analogy."
+ },
+ {
+   level: 4,
+   word: "Contingency",
+   pronunciation: "/kənˈtɪndʒənsi/",
+   partOfSpeech: "noun",
+   category: "Metaphysics & Ontology",
+   definition: "The state of depending upon something else for existence and therefore not existing necessarily.",
+   etymology: "Latin contingere ('to happen, befall').",
+   example: "All created beings possess contingency."
+ },
+ {
+   level: 4,
+   word: "Necessity",
+   pronunciation: "/nəˈsɛsəti/",
+   partOfSpeech: "noun",
+   category: "Metaphysics & Ontology",
+   definition: "The quality of existing in such a way that non-existence is impossible.",
+   etymology: "Latin necessitas ('inevitability').",
+   example: "Classical theism attributes necessity uniquely to God."
+ },
+ {
+   level: 4,
+   word: "Beatitude",
+   pronunciation: "/biˈætɪtjuːd/",
+   partOfSpeech: "noun",
+   category: "Christian Ethics",
+   definition: "Perfect blessedness and ultimate happiness found in communion with God.",
+   etymology: "Latin beatitudo ('blessedness').",
+   example: "The saints attain eternal beatitude in God's presence."
+ },
+ {
+   level: 4,
+   word: "Concupiscence",
+   pronunciation: "/kənˈkjuːpɪsns/",
+   partOfSpeech: "noun",
+   category: "Hamartiology",
+   definition: "The disordered inclination or desire toward sin that remains in fallen humanity.",
+   etymology: "Latin concupiscentia ('strong desire').",
+   example: "Augustine distinguished concupiscence from personal acts of sin."
+ },
+ {
+   level: 4,
+   word: "Perseity",
+   pronunciation: "/pərˈsiːɪti/",
+   partOfSpeech: "noun",
+   category: "Doctrine of God",
+   definition: "Existence through oneself; another philosophical expression closely related to divine aseity.",
+   etymology: "Latin per se ('through itself, in itself').",
+   example: "God's perseity emphasizes His absolute independence and self-existence."
+ },
+
+ {
+   level: 6,
+   word: "Ein Sof",
+   pronunciation: "/eɪn sɒf/",
+   partOfSpeech: "noun",
+   category: "Jewish Mysticism",
+   definition: "The infinite, unknowable aspect of God beyond all attributes and limitations.",
+   etymology: "Hebrew ein ('without') + sof ('end'). Literally 'without end.'",
+   example: "Kabbalah teaches that creation flows from the hidden reality of Ein Sof."
+ },
+ {
+   level: 6,
+   word: "Sefirah",
+   pronunciation: "/səˈfɪərə/",
+   partOfSpeech: "noun",
+   category: "Kabbalah",
+   definition: "One of the ten divine emanations through which God reveals Himself and sustains creation.",
+   etymology: "Hebrew sefirah ('enumeration, emanation').",
+   example: "Wisdom is represented by the sefirah Chokhmah."
+ },
+ {
+   level: 6,
+   word: "Shekhinah",
+   pronunciation: "/ʃəˈkiːnə/",
+   partOfSpeech: "noun",
+   category: "Jewish Theology",
+   definition: "The indwelling or manifest presence of God among His people.",
+   etymology: "Hebrew shakhan ('to dwell').",
+   example: "The rabbis spoke of the Shekhinah resting upon the faithful."
+ },
+ {
+   level: 6,
+   word: "Tzimtzum",
+   pronunciation: "/tsɪmˈtsuːm/",
+   partOfSpeech: "noun",
+   category: "Kabbalah",
+   definition: "The mystical doctrine that God 'contracted' His manifest presence to allow space for creation.",
+   etymology: "Hebrew tzimtzum ('contraction, withdrawal').",
+   example: "Lurianic Kabbalah begins with the concept of tzimtzum."
+ },
+ {
+   level: 6,
+   word: "Tikkun",
+   pronunciation: "/tɪˈkuːn/",
+   partOfSpeech: "noun",
+   category: "Jewish Ethics",
+   definition: "Repair, restoration, or the healing of the world through righteous action.",
+   etymology: "Hebrew tikkun ('repair, correction').",
+   example: "Acts of justice contribute to tikkun olam."
+ },
+ {
+   level: 6,
+   word: "Devekut",
+   pronunciation: "/dɛvəˈkuːt/",
+   partOfSpeech: "noun",
+   category: "Jewish Mysticism",
+   definition: "A state of spiritual cleaving or attachment to God.",
+   etymology: "Hebrew davaq ('to cling, adhere').",
+   example: "Prayer was seen as a path toward devekut."
+ },
+ {
+   level: 6,
+   word: "Ruach",
+   pronunciation: "/ˈruːɑːx/",
+   partOfSpeech: "noun",
+   category: "Jewish Anthropology",
+   definition: "Spirit, breath, or wind; one aspect of the human soul and divine activity.",
+   etymology: "Hebrew ruach ('breath, spirit, wind').",
+   example: "The ruach symbolizes both life and divine inspiration."
+ },
+ {
+   level: 6,
+   word: "Nefesh",
+   pronunciation: "/ˈnɛfɛʃ/",
+   partOfSpeech: "noun",
+   category: "Jewish Anthropology",
+   definition: "The living soul or life-force associated with physical existence.",
+   etymology: "Hebrew nefesh ('soul, living being').",
+   example: "Every human nefesh possesses inherent dignity."
+ },
+ {
+   level: 6,
+   word: "Da'at",
+   pronunciation: "/daˈʔat/",
+   partOfSpeech: "noun",
+   category: "Kabbalah",
+   definition: "Knowledge understood as intimate, experiential awareness rather than mere information.",
+   etymology: "Hebrew da'at ('knowledge').",
+   example: "Da'at unites wisdom with understanding."
+ },
+ {
+   level: 4,
+   word: "Ein Od Milvado",
+   pronunciation: "/eɪn oʊd mɪlˈvɑːdoʊ/",
+   partOfSpeech: "noun",
+   category: "Jewish Philosophy",
+   definition: "The theological affirmation that 'there is nothing besides Him,' emphasizing God's absolute sovereignty.",
+   etymology: "Hebrew phrase from Deuteronomy 4:35.",
+   example: "Hasidic thinkers frequently meditate on Ein Od Milvado."
+ },
+ {
+   level: 6,
+   word: "Kavod",
+   pronunciation: "/kɑːˈvoʊd/",
+   partOfSpeech: "noun",
+   category: "Jewish Theology",
+   definition: "The glory, weight, or manifest majesty of God.",
+   etymology: "Hebrew kavod ('glory, honor, weight').",
+   example: "The Temple symbolized the dwelling of God's kavod."
+ },
+ {
+   level: 6,
+   word: "Memra",
+   pronunciation: "/ˈmɛmrɑː/",
+   partOfSpeech: "noun",
+   category: "Jewish Philosophy",
+   definition: "The 'Word' of God in Aramaic Targums, often expressing God's active presence.",
+   etymology: "Aramaic memra ('word').",
+   example: "The Memra acts as God's self-revelation in many Targum passages."
+ },
+ {
+   level: 6,
+   word: "Pardes",
+   pronunciation: "/pɑːrˈdeɪs/",
+   partOfSpeech: "noun",
+   category: "Jewish Hermeneutics",
+   definition: "The fourfold method of biblical interpretation: literal, hinted, interpretive, and mystical.",
+   etymology: "Hebrew pardes ('orchard, garden').",
+   example: "The Pardes model allows multiple layers of meaning in Scripture."
+ },
+ {
+   level: 6,
+   word: "Middot",
+   pronunciation: "/mɪˈdoʊt/",
+   partOfSpeech: "noun",
+   category: "Jewish Ethics",
+   definition: "Moral virtues or character traits cultivated through spiritual discipline.",
+   etymology: "Hebrew middah ('measure, attribute').",
+   example: "Patience is one of the essential middot."
+ },
+ {
+   level: 6,
+   word: "Binah",
+   pronunciation: "/bɪˈnɑː/",
+   partOfSpeech: "noun",
+   category: "Kabbalah",
+   definition: "Understanding or discernment; one of the highest sefirot.",
+   etymology: "Hebrew binah ('understanding').",
+   example: "Binah transforms wisdom into insight."
+ },
+ {
+   level:6,
+   word: "Chokhmah",
+   pronunciation: "/xoʊkˈmɑː/",
+   partOfSpeech: "noun",
+   category: "Kabbalah",
+   definition: "Primordial divine wisdom; the second sefirah in the Tree of Life.",
+   etymology: "Hebrew chokhmah ('wisdom').",
+   example: "Chokhmah represents intuitive wisdom before rational analysis."
+ },
+ {
+   level: 6,
+   word: "Hitbodedut",
+   pronunciation: "/hɪtbɒdɛˈduːt/",
+   partOfSpeech: "noun",
+   category: "Jewish Mysticism",
+   definition: "A contemplative practice of secluded, spontaneous conversation with God.",
+   etymology: "Hebrew hitbodedut ('self-seclusion').",
+   example: "Rabbi Nachman encouraged daily hitbodedut."
+ },
+ {
+   level: 6,
+   word: "Adam Kadmon",
+   pronunciation: "/ˈɑːdɑːm kɑːdˈmoʊn/",
+   partOfSpeech: "noun",
+   category: "Kabbalah",
+   definition: "The primordial spiritual archetype through whom divine light first unfolds in Lurianic Kabbalah.",
+   etymology: "Hebrew adam ('human') + kadmon ('primordial').",
+   example: "Adam Kadmon is not the historical Adam but a cosmic archetype."
+ },
+ {
+   level: 6,
+   word: "Ayin",
+   pronunciation: "/ˈɑːjɪn/",
+   partOfSpeech: "noun",
+   category: "Jewish Mysticism",
+   definition: "Divine 'nothingness' or transcendence beyond all categories of existence.",
+   etymology: "Hebrew ayin ('nothing').",
+   example: "Mystics taught that all being emerges from Ayin."
+ },
+ {
+   level: 6,
+   word: "Hashgachah",
+   pronunciation: "/haʃɡɑːˈxɑː/",
+   partOfSpeech: "noun",
+   category: "Jewish Philosophy",
+   definition: "Divine providence; God's active guidance and governance of creation.",
+   etymology: "Hebrew hashgachah ('supervision, oversight').",
+   example: "Maimonides offered a philosophical account of hashgachah."
+ },
 ];
 
 // ═══════════════════════════════════════════════════════
