@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lexicon</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F4EF;--dark:#1A1A1A;--gold:#F7C873;--green:#7EC8A4;
+  --shadow:0 4px 24px rgba(0,0,0,0.08);
+  --l1:#6B9E78;--l2:#5B8FA8;--l3:#A67C52;--l4:#7B6FA0;--l5:#C97B4B;
+  --l6:#3D7A6A;--l7:#7A3D5C;--l8:#4D6FA8;--l9:#8A4D3D;--l10:#2E2E2E;
+}
+body{background:var(--bg);font-family:Georgia,serif;color:var(--dark);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* ── UTILS ── */
+.hidden{display:none!important}
+
+/* ── HEADER ── */
+.hdr{background:var(--dark);padding:18px 16px 14px;position:sticky;top:0;z-index:99}
+.hdr-title{color:#F7F4EF;font-size:24px;font-weight:bold}
+.hdr-sub{color:#888;font-family:sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px}
+.lhdr{background:var(--dark);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:99}
+.back-btn{background:none;border:none;color:#888;cursor:pointer;font-family:sans-serif;font-size:13px;padding:4px 0;white-space:nowrap}
+.back-btn:hover{color:#F7F4EF}
+.lhdr-title{color:#F7F4EF;font-size:14px;font-weight:bold;text-align:center;flex:1}
+.stats{display:flex;gap:14px;flex-shrink:0}
+.stat{text-align:center}
+.stat-n{font-family:sans-serif;font-size:16px;font-weight:bold}
+.stat-l{color:#888;font-family:sans-serif;font-size:9px;text-transform:uppercase}
+.s-streak{color:var(--gold)}.s-best{color:var(--green)}
+
+/* ── CONTENT ── */
+.wrap{max-width:520px;margin:0 auto;padding:20px 16px}
+
+/* ── HOME ── */
+.quick{background:var(--dark);border-radius:14px;padding:20px;margin-bottom:20px}
+.q-eye{color:var(--gold);font-family:sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.q-ttl{color:#F7F4EF;font-size:18px;font-weight:bold;margin-bottom:12px}
+.row{display:flex;gap:8px}
+.btn-flash-dk{flex:1;padding:11px;border:2px solid #444;border-radius:9px;background:transparent;color:#F7F4EF;cursor:pointer;font-family:sans-serif;font-size:13px;font-weight:600}
+.btn-flash-dk:hover{border-color:#888}
+.btn-quiz-gd{flex:1;padding:11px;border:none;border-radius:9px;background:var(--gold);color:var(--dark);cursor:pointer;font-family:sans-serif;font-size:13px;font-weight:700}
+.btn-quiz-gd:hover{background:#e8b85f}
+.sec-lbl{font-family:sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:12px}
+.lvl-card{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.lvl-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.lvl-eye{font-family:sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.lvl-name{font-size:15px;font-weight:bold;margin-top:1px}
+.lvl-cnt{font-family:sans-serif;font-size:12px;color:#AAA}
+.btn-fl{flex:1;padding:8px;border-radius:8px;cursor:pointer;font-family:sans-serif;font-size:12px;font-weight:600;border:2px solid;background:transparent}
+.btn-qz{flex:1;padding:8px;border-radius:8px;cursor:pointer;font-family:sans-serif;font-size:12px;font-weight:700;border:none;color:#fff}
+
+/* ── MODE TOGGLE ── */
+.mtog{display:flex;background:#E8E3DB;border-radius:8px;padding:3px;margin-bottom:14px;gap:3px}
+.mbtn{flex:1;padding:9px;border:none;border-radius:6px;cursor:pointer;font-family:sans-serif;font-size:13px;font-weight:600;transition:all .2s;background:transparent;color:#666}
+.mbtn.on{background:var(--dark);color:#F7F4EF}
+
+/* ── PROGRESS ── */
+.prog{margin-bottom:14px}
+.prog-meta{display:flex;justify-content:space-between;font-family:sans-serif;font-size:11px;color:#888;margin-bottom:5px}
+.prog-score{font-weight:600}
+.prog-track{height:3px;background:#DDD;border-radius:2px}
+.prog-fill{height:100%;border-radius:2px;transition:width .3s ease}
+
+/* ── FLASHCARD ── */
+.scene{perspective:1000px;margin-bottom:10px;cursor:pointer}
+.inner{position:relative;width:100%;min-height:220px;transform-style:preserve-3d;transition:transform .45s ease;border-radius:16px}
+.inner.flipped{transform:rotateY(180deg)}
+.face{position:absolute;width:100%;min-height:220px;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;background:#fff;box-shadow:var(--shadow);padding:24px 22px;overflow:hidden}
+.face.back{transform:rotateY(180deg)}
+.face-top-bar{height:5px;border-radius:16px 16px 0 0;position:absolute;top:0;left:0;right:0}
+.badge{position:absolute;top:12px;right:14px;border-radius:10px;padding:2px 9px;font-family:sans-serif;font-size:10px;font-weight:700;letter-spacing:.8px}
+.front-body{text-align:center;padding-top:24px}
+.card-word{font-size:36px;font-weight:bold;margin-bottom:8px;letter-spacing:-.5px}
+.card-pron{color:#999;font-family:sans-serif;font-size:13px;margin-bottom:6px}
+.card-pos{display:inline-block;color:#888;font-style:italic;font-family:sans-serif;font-size:11px;background:#F5F5F5;padding:3px 10px;border-radius:10px;margin-top:4px}
+.tap-hint{margin-top:28px;color:#CCC;font-family:sans-serif;font-size:11px;letter-spacing:1px}
+.back-word{font-size:20px;font-weight:bold;margin-bottom:10px}
+.back-def{font-size:15px;line-height:1.65;color:#333;margin-bottom:16px}
+.back-ex{padding-left:12px;color:#666;font-style:italic;font-size:13px;line-height:1.6;border-left:3px solid #ccc}
+
+/* ── ETYMOLOGY ── */
+.etym-btn{width:100%;margin-top:8px;padding:10px;border-radius:10px;cursor:pointer;font-family:sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border:2px solid;background:transparent}
+.etym-panel{border-radius:10px;padding:14px 16px;margin-top:4px;border:2px solid}
+.etym-eye{font-family:sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.etym-txt{font-family:sans-serif;font-size:13px;line-height:1.7;color:#333}
+
+/* ── CARD NAV ── */
+.cnav{display:flex;gap:10px;margin-top:10px}
+.btn-prev{flex:1;padding:12px;border:2px solid #DDD;border-radius:10px;background:transparent;font-family:sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.btn-prev:disabled{color:#CCC;cursor:not-allowed}
+.btn-prev:not(:disabled):hover{border-color:#AAA}
+.btn-next{flex:2;padding:12px;border:none;border-radius:10px;background:var(--dark);color:#F7F4EF;font-family:sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.btn-next:hover{background:#333}
+
+/* ── QUIZ ── */
+.qprompt{background:#fff;border-radius:16px;padding:24px 20px;box-shadow:var(--shadow);margin-bottom:12px}
+.qprompt-top{height:5px;border-radius:16px 16px 0 0;position:absolute;top:0;left:0;right:0}
+.qprompt{position:relative;overflow:hidden}
+.q-lbl{font-family:sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:10px}
+.q-def{font-size:16px;line-height:1.65;font-style:italic}
+.qopts{display:flex;flex-direction:column;gap:9px;margin-bottom:12px}
+.qopt{padding:13px 16px;border-radius:10px;cursor:pointer;font-family:Georgia,serif;font-size:15px;font-weight:bold;text-align:left;display:flex;align-items:center;gap:10px;border:2px solid #E0DBD3;background:#fff;color:var(--dark);transition:border-color .15s}
+.qopt:hover:not(.answered){border-color:#BBB}
+.qopt.correct{background:#EAF7EE;border-color:#4A7C59;color:#2C5F38}
+.qopt.wrong{background:#FBE9E7;border-color:#E07A5F;color:#8B2500}
+.qopt.answered{cursor:default}
+.qletter{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#F0EBE3;color:#888;font-family:sans-serif;font-size:10px;font-weight:700;flex-shrink:0}
+.qfb{border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.qfb.correct{background:#EAF7EE;color:#2C5F38}
+.qfb.wrong{background:#FBE9E7;color:#8B2500}
+.qfb-lbl{font-family:sans-serif;font-size:13px;font-weight:700}
+.qfb-ex{font-style:italic;color:#555;margin-top:5px;font-size:12px;line-height:1.5}
+.qetym{border-radius:10px;padding:12px 14px;margin-bottom:10px;border:2px solid}
+.qetym-lbl{font-family:sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.qetym-txt{font-family:sans-serif;font-size:12px;line-height:1.65;color:#444}
+.btn-nw{width:100%;padding:13px;border:none;border-radius:10px;background:var(--dark);color:#F7F4EF;font-family:sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.btn-nw:hover{background:#333}
+
+/* ── SCORE ── */
+.score-card{background:#fff;border-radius:16px;padding:40px 24px;text-align:center;box-shadow:var(--shadow)}
+.sc-emoji{font-size:48px;margin-bottom:12px}
+.sc-num{font-size:26px;font-weight:bold;margin-bottom:6px}
+.sc-msg{color:#666;font-family:sans-serif;font-size:14px;margin-bottom:20px}
+.sc-streak{font-family:sans-serif;font-size:13px;margin-bottom:16px}
+.sc-btns{display:flex;gap:10px}
+.btn-again{flex:1;padding:12px;background:var(--dark);color:#F7F4EF;border:none;border-radius:8px;cursor:pointer;font-family:sans-serif;font-size:14px;font-weight:600}
+.btn-home{flex:1;padding:12px;background:transparent;color:#444;border:2px solid #DDD;border-radius:8px;cursor:pointer;font-family:sans-serif;font-size:14px;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HOME ══════════ -->
+<div id="s-home">
+  <div class="hdr">
+    <div class="hdr-title">Lexicon</div>
+    <div class="hdr-sub" id="hdr-count">— Words · 10 Levels · Etymology</div>
+  </div>
+  <div class="wrap">
+    <div class="quick">
+      <div class="q-eye">Quick Start</div>
+      <div class="q-ttl">All Words</div>
+      <div class="row">
+        <button class="btn-flash-dk" onclick="start('All','browse')">📖 Flashcards</button>
+        <button class="btn-quiz-gd"  onclick="start('All','quiz')">⚡ Quiz</button>
+      </div>
+    </div>
+    <div class="sec-lbl">Choose a Level</div>
+    <div id="lvl-list"></div>
+  </div>
+</div>
+
+<!-- ══════════ LEARN ══════════ -->
+<div id="s-learn" class="hidden">
+  <div class="lhdr">
+    <button class="back-btn" onclick="goHome()">← Back</button>
+    <div class="lhdr-title" id="l-title"></div>
+    <div class="stats">
+      <div class="stat"><div class="stat-n s-streak" id="st-streak">0</div><div class="stat-l">Streak</div></div>
+      <div class="stat"><div class="stat-n s-best"   id="st-best">0</div><div class="stat-l">Best</div></div>
+    </div>
+  </div>
+  <div class="wrap">
+
+    <!-- mode toggle -->
+    <div class="mtog">
+      <button class="mbtn" id="mb-browse" onclick="switchMode('browse')">📖 Flashcards</button>
+      <button class="mbtn" id="mb-quiz"   onclick="switchMode('quiz')">⚡ Quiz</button>
+    </div>
+
+    <!-- progress -->
+    <div class="prog" id="prog">
+      <div class="prog-meta">
+        <span id="prog-lbl">1 / 1</span>
+        <span class="prog-score hidden" id="prog-score"></span>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+    </div>
+
+    <!-- score screen -->
+    <div class="score-card hidden" id="score-screen">
+      <div class="sc-emoji" id="sc-emoji"></div>
+      <div class="sc-num"   id="sc-num"></div>
+      <div class="sc-msg"   id="sc-msg"></div>
+      <div class="sc-streak hidden" id="sc-streak"></div>
+      <div class="sc-btns">
+        <button class="btn-again" onclick="reset()">Go Again</button>
+        <button class="btn-home"  onclick="goHome()">Home</button>
+      </div>
+    </div>
+
+    <!-- flashcard area -->
+    <div id="fc-area" class="hidden">
+      <div class="scene" onclick="flip()">
+        <div class="inner" id="card-inner">
+          <!-- front -->
+          <div class="face front" id="fc-front">
+            <div class="face-top-bar" id="fc-front-bar"></div>
+            <div class="badge" id="fc-badge"></div>
+            <div class="front-body">
+              <div class="card-word" id="fc-word"></div>
+              <div class="card-pron" id="fc-pron"></div>
+              <div class="card-pos"  id="fc-pos"></div>
+              <div class="tap-hint">TAP TO REVEAL</div>
+            </div>
+          </div>
+          <!-- back -->
+          <div class="face back" id="fc-back">
+            <div class="face-top-bar" id="fc-back-bar"></div>
+            <div class="badge" id="fc-badge2"></div>
+            <div class="back-word" id="fc-bword"></div>
+            <div class="back-def"  id="fc-def"></div>
+            <div class="back-ex"   id="fc-ex"></div>
+          </div>
+        </div>
+      </div>
+      <!-- etymology -->
+      <div id="etym-wrap" class="hidden">
+        <button class="etym-btn" id="etym-btn" onclick="toggleEtym()"></button>
+        <div class="etym-panel hidden" id="etym-panel">
+          <div class="etym-eye" id="etym-eye">Etymology &amp; Root Pattern</div>
+          <div class="etym-txt" id="etym-txt"></div>
+        </div>
+      </div>
+      <!-- nav -->
+      <div class="cnav">
+        <button class="btn-prev" id="btn-prev" onclick="prev()">← Prev</button>
+        <button class="btn-next" id="btn-next" onclick="next()">Next →</button>
+      </div>
+    </div>
+
+    <!-- quiz area -->
+    <div id="qz-area" class="hidden">
+      <div class="qprompt" id="qprompt">
+        <div class="qprompt-top" id="qprompt-bar"></div>
+        <div class="q-lbl">Which word matches this definition?</div>
+        <div class="q-def" id="q-def"></div>
+      </div>
+      <div class="qopts" id="qopts"></div>
+      <div id="qresult" class="hidden">
+        <div class="qfb" id="qfb">
+          <div class="qfb-lbl" id="qfb-lbl"></div>
+          <div class="qfb-ex"  id="qfb-ex"></div>
+        </div>
+        <div class="qetym" id="qetym">
+          <div class="qetym-lbl" id="qetym-lbl">🌱 Etymology</div>
+          <div class="qetym-txt" id="qetym-txt"></div>
+        </div>
+        <button class="btn-nw" id="btn-nw" onclick="next()">Next Word →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  WORD BANK — add your words here following this pattern
+//  Required fields: level (1–10), word, pronunciation,
+//  partOfSpeech, definition, etymology, example
+// ═══════════════════════════════════════════════════════
+const WORDS = [
+  {
+    level: 1,
+    word: "Ephemeral",
+    pronunciation: "/ɪˈfɛmərəl/",
+    partOfSpeech: "adjective",
+    definition: "Lasting for a very short time; fleeting.",
+    etymology: "Greek epi (on) + hemera (day) → ephemeros → ephemeral. Root hemer- means 'day'. Also in: ephemeris (daily astronomical tables).",
+    example: "Cherry blossoms are ephemeral — their beauty lasts barely a week."
+  },
+  {
+    level: 1,
+    word: "Lucid",
+    pronunciation: "/ˈluːsɪd/",
+    partOfSpeech: "adjective",
+    definition: "Expressed clearly; easy to understand. Also: showing clear thinking.",
+    etymology: "Latin lux, lucis (light) → lucidus → lucid. Root luc- means 'light'. Also in: translucent, elucidate, illuminate.",
+    example: "Even in his final years, his writing remained remarkably lucid and precise."
+  },
+  // ── ADD MORE WORDS BELOW THIS LINE ──────────────────
+  // Copy and paste the block above, change the values,
+  // and separate each block with a comma.
+  // ────────────────────────────────────────────────────
+];
+
+// ═══════════════════════════════════════════════════════
+//  CONFIG — level labels and colours
+// ═══════════════════════════════════════════════════════
+const COLORS = {1:"#6B9E78",2:"#5B8FA8",3:"#A67C52",4:"#7B6FA0",5:"#C97B4B",6:"#3D7A6A",7:"#7A3D5C",8:"#4D6FA8",9:"#8A4D3D",10:"#2E2E2E"};
+const LABELS = {1:"Foundational",2:"Developing",3:"Expanding",4:"Intermediate",5:"Proficient",6:"Advanced",7:"Scholarly",8:"Erudite",9:"Arcane",10:"Lexical Mastery"};
+
+// ═══════════════════════════════════════════════════════
+//  APP STATE
+// ═══════════════════════════════════════════════════════
+let S = {
+  level:"All", mode:"browse",
+  cards:[], idx:0, flipped:false, etymOpen:false,
+  qPhase:"q", qOpts:[], qAns:null,
+  score:{c:0,t:0}, streak:0, best:0, done:false
+};
+
+// ═══════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════
+const $  = id => document.getElementById(id);
+const sh = (id, v) => $(id).classList.toggle("hidden", !v);
+function shuffle(a){ return [...a].sort(()=>Math.random()-.5) }
+function pool(){ return S.level==="All" ? WORDS : WORDS.filter(w=>w.level===+S.level) }
+function col(){ return S.level==="All" ? "#2E2E2E" : (COLORS[+S.level]||"#2E2E2E") }
+function cardCol(w){ return COLORS[w.level]||"#999" }
+
+// ═══════════════════════════════════════════════════════
+//  BUILD HOME
+// ═══════════════════════════════════════════════════════
+function buildHome(){
+  $("hdr-count").textContent = WORDS.length + " Words · 10 Levels · Etymology";
+  const list = $("lvl-list");
+  list.innerHTML = "";
+  const levels = [...new Set(WORDS.map(w=>w.level))].sort((a,b)=>a-b);
+  // Show all 10 level slots; grey out empty ones
+  for(let lvl=1;lvl<=10;lvl++){
+    const c   = COLORS[lvl];
+    const cnt = WORDS.filter(w=>w.level===lvl).length;
+    const empty = cnt===0;
+    const card = document.createElement("div");
+    card.className = "lvl-card";
+    card.style.borderLeft = `4px solid ${empty?"#DDD":c}`;
+    card.innerHTML = `
+      <div class="lvl-top">
+        <div>
+          <div class="lvl-eye" style="color:${empty?"#CCC":c}">Level ${lvl}</div>
+          <div class="lvl-name" style="color:${empty?"#CCC":"inherit"}">${LABELS[lvl]}</div>
+        </div>
+        <span class="lvl-cnt">${cnt} word${cnt!==1?"s":""}</span>
+      </div>
+      <div class="row">
+        <button class="btn-fl" style="border-color:${empty?"#DDD":c+"33"};color:${empty?"#CCC":c};background:${empty?"transparent":c+"11"}"
+          ${empty?"disabled":""} onclick="start(${lvl},'browse')">📖 Flashcards</button>
+        <button class="btn-qz" style="background:${empty?"#DDD":c};${empty?"cursor:not-allowed":""}"
+          ${empty?"disabled":""} onclick="start(${lvl},'quiz')">⚡ Quiz</button>
+      </div>`;
+    list.appendChild(card);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  SESSION CONTROL
+// ═══════════════════════════════════════════════════════
+function start(lvl, mode){
+  if(lvl!=="All" && WORDS.filter(w=>w.level===+lvl).length===0) return;
+  S.level=lvl; S.mode=mode; S.best=0;
+  reset();
+  show("learn");
+}
+
+function reset(){
+  S.cards=shuffle(pool());
+  S.idx=0; S.flipped=false; S.etymOpen=false;
+  S.qPhase="q"; S.qOpts=[]; S.qAns=null;
+  S.score={c:0,t:0}; S.streak=0; S.done=false;
+  render();
+}
+
+function switchMode(m){
+  if(S.mode===m) return;
+  S.mode=m; reset();
+}
+
+function goHome(){ show("home"); buildHome(); }
+
+// ═══════════════════════════════════════════════════════
+//  SCREEN SWITCH
+// ═══════════════════════════════════════════════════════
+function show(name){
+  sh("s-home",  name==="home");
+  sh("s-learn", name==="learn");
+  if(name==="learn") render();
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════════
+function render(){
+  // header
+  $("l-title").textContent = S.level==="All"
+    ? `All Words` : `Level ${S.level} — ${LABELS[+S.level]}`;
+  $("st-streak").textContent = S.streak;
+  $("st-best").textContent   = S.best;
+
+  // mode buttons
+  $("mb-browse").classList.toggle("on", S.mode==="browse");
+  $("mb-quiz").classList.toggle("on",   S.mode==="quiz");
+
+  // panels
+  sh("score-screen", S.done);
+  sh("prog",         !S.done);
+  sh("fc-area",  !S.done && S.mode==="browse");
+  sh("qz-area",  !S.done && S.mode==="quiz");
+
+  if(S.done){ renderScore(); return; }
+
+  // progress
+  const n = S.cards.length, i = S.idx+1;
+  $("prog-lbl").textContent  = `${i} / ${n}`;
+  $("prog-fill").style.width = (i/n*100)+"%";
+  $("prog-fill").style.background = col();
+  const ps = $("prog-score");
+  if(S.mode==="quiz"){
+    ps.classList.remove("hidden");
+    ps.textContent  = `${S.score.c}/${S.score.t} correct`;
+    ps.style.color  = col();
+  } else {
+    ps.classList.add("hidden");
+  }
+
+  if(S.mode==="browse") renderFC();
+  else                  renderQZ();
+}
+
+// ─── FLASHCARD ───────────────────────────────────────
+function renderFC(){
+  const w   = S.cards[S.idx];
+  if(!w) return;
+  const c   = cardCol(w);
+
+  // colour bars + badges
+  ["fc-front-bar","fc-back-bar"].forEach(id=>$(id).style.background=c);
+  ["fc-badge","fc-badge2"].forEach(id=>{
+    $(id).textContent = `Lv ${w.level}`;
+    $(id).style.background = c+"22";
+    $(id).style.color = c;
+  });
+
+  // front
+  $("fc-word").textContent = w.word;
+  $("fc-pron").textContent = w.pronunciation;
+  $("fc-pos").textContent  = w.partOfSpeech;
+
+  // back
+  $("fc-bword").textContent = w.word;
+  $("fc-def").textContent   = w.definition;
+  $("fc-ex").textContent    = `"${w.example}"`;
+  $("fc-ex").style.borderLeftColor = c;
+
+  // flip
+  $("card-inner").classList.toggle("flipped", S.flipped);
+
+  // etymology
+  sh("etym-wrap", S.flipped);
+  if(S.flipped){
+    $("etym-btn").textContent = S.etymOpen ? "▲ Hide Etymology" : "🌱 Show Etymology & Roots";
+    $("etym-btn").style.borderColor = c+"55";
+    $("etym-btn").style.color       = c;
+    $("etym-btn").style.background  = c+"0D";
+    $("etym-eye").style.color       = c;
+    $("etym-txt").textContent       = w.etymology;
+    sh("etym-panel", S.etymOpen);
+    if(S.etymOpen){
+      $("etym-panel").style.background  = c+"0D";
+      $("etym-panel").style.borderColor = c+"44";
+    }
+  }
+
+  // nav
+  $("btn-prev").disabled   = S.idx===0;
+  $("btn-next").textContent = S.idx+1<S.cards.length ? "Next →" : "Finish";
+}
+
+function flip(){
+  if(S.mode!=="browse") return;
+  S.flipped = !S.flipped;
+  if(!S.flipped) S.etymOpen=false;
+  render();
+}
+function toggleEtym(){ S.etymOpen=!S.etymOpen; render(); }
+function prev(){ if(S.idx>0){S.idx--;S.flipped=false;S.etymOpen=false;render();} }
+function next(){
+  if(S.idx+1>=S.cards.length){ S.done=true; render(); }
+  else{ S.idx++;S.flipped=false;S.etymOpen=false;S.qPhase="q";S.qOpts=[];S.qAns=null;render(); }
+}
+
+// ─── QUIZ ────────────────────────────────────────────
+function renderQZ(){
+  const w = S.cards[S.idx];
+  if(!w) return;
+  const c = cardCol(w);
+
+  $("qprompt-bar").style.background = c;
+  $("q-def").textContent = w.definition;
+
+  // generate options once per card
+  if(S.qPhase==="q" && S.qOpts.length===0){
+    const p  = pool();
+    const others = shuffle(p.filter(x=>x.word!==w.word)).slice(0,3);
+    S.qOpts = shuffle([w,...others]);
+  }
+
+  // render options
+  const container = $("qopts");
+  container.innerHTML = "";
+  const letters = ["A","B","C","D"];
+  S.qOpts.forEach((opt,i)=>{
+    const btn = document.createElement("button");
+    btn.className = "qopt";
+    if(S.qPhase==="result"){
+      btn.classList.add("answered");
+      if(opt.word===w.word)               btn.classList.add("correct");
+      else if(S.qAns&&opt.word===S.qAns.word) btn.classList.add("wrong");
+    }
+    btn.innerHTML=`<span class="qletter">${letters[i]}</span>${opt.word}`;
+    btn.addEventListener("click",()=>answer(opt));
+    container.appendChild(btn);
+  });
+
+  // result panel
+  sh("qresult", S.qPhase==="result");
+  if(S.qPhase==="result"){
+    const ok = S.qAns && S.qAns.word===w.word;
+    $("qfb").className    = "qfb "+(ok?"correct":"wrong");
+    $("qfb-lbl").textContent = ok ? "✓ Correct!" : `✗ The answer was "${w.word}"`;
+    $("qfb-ex").textContent  = `"${w.example}"`;
+    $("qetym").style.background  = c+"0D";
+    $("qetym").style.borderColor = c+"44";
+    $("qetym-lbl").style.color   = c;
+    $("qetym-txt").textContent   = w.etymology;
+    $("btn-nw").textContent = S.idx+1<S.cards.length ? "Next Word →" : "See Results";
+  }
+}
+
+function answer(opt){
+  if(S.qPhase==="result") return;
+  S.qAns   = opt;
+  S.qPhase = "result";
+  const ok = opt.word===S.cards[S.idx].word;
+  S.streak = ok ? S.streak+1 : 0;
+  S.best   = Math.max(S.best, S.streak);
+  S.score.t++;
+  if(ok) S.score.c++;
+  render();
+}
+
+// ─── SCORE ───────────────────────────────────────────
+function renderScore(){
+  const {c,t} = S.score;
+  const ratio  = t>0 ? c/t : 0;
+  const browse = S.mode==="browse";
+  $("sc-emoji").textContent = browse ? "✨" : (ratio>=.8 ? "🏆" : "📚");
+  $("sc-num").textContent   = browse ? "All Done!" : `${c} / ${t}`;
+  $("sc-msg").textContent   = browse
+    ? `You reviewed ${S.cards.length} words.`
+    : (ratio>=.8 ? "Excellent — your lexicon is growing." : "Keep reviewing and the patterns will stick.");
+  const sl = $("sc-streak");
+  if(!browse && S.best>1){
+    sl.classList.remove("hidden");
+    sl.textContent  = `Best streak: ${S.best} in a row 🔥`;
+    sl.style.color  = col();
+  } else { sl.classList.add("hidden"); }
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+buildHome();
+</script>
+</body>
+</html>
